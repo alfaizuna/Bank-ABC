@@ -1,4 +1,4 @@
-version: '3.8'
+#version: '3.8'
 
 services:
   postgres:
@@ -23,9 +23,9 @@ services:
     ports:
       - "8080:8080"
     volumes:
-      - ./app/target:/app
+      - ./target:/app
     working_dir: /app
-    command: java -jar application.jar
+    command: java -jar Bank-ABC-0.0.1-SNAPSHOT.jar
     depends_on:
         - postgres
 
