@@ -1,0 +1,31 @@
+### Register Customer
+POST http://localhost:8080/customer
+Content-Type: application/json
+
+{
+  "nik":21243434323235,
+  "name":"udin2"
+}
+
+### Get Saldo
+GET http://localhost:8080/customer/2
+Content-Type: application/json
+
+### Tambah Saldo
+PATCH http://localhost:8080/customer/1?amountSaldo=155000
+Content-Type: application/json
+
+### Transfer Saldo
+POST http://localhost:8080/customer/transfer-saldo
+Content-Type: application/json
+
+{
+  "fromAccount": "202408160001",
+  "toAccount": "202408160002",
+  "amount": 20000
+}
+
+### Tarik Saldo
+POST http://localhost:8080/customer/tarik-saldo/1?amountSaldo=55000
+Content-Type: application/json
+
