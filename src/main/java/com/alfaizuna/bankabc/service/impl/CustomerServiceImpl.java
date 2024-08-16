@@ -6,7 +6,6 @@ import com.alfaizuna.bankabc.dto.response.CustomerSaldoResponseDTO;
 import com.alfaizuna.bankabc.entity.Customer;
 import com.alfaizuna.bankabc.repository.CustomerRepository;
 import com.alfaizuna.bankabc.service.CustomerService;
-import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
@@ -64,7 +63,6 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    @Transactional
     public CustomerSaldoResponseDTO addSaldo(Long customerId, Long amountSaldo) throws Exception {
         Customer customer = this.checkCustomerExistByCustomerId(customerId);
 
@@ -75,7 +73,6 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    @Transactional
     public List<CustomerSaldoResponseDTO> transferSaldo(TransferSaldoRequestDTO requestDTO) throws Exception {
         Customer fromAccount = this.findCustomerByAccountNumber(requestDTO.getFromAccount());
         Customer toAccount = this.findCustomerByAccountNumber(requestDTO.getToAccount());
@@ -96,7 +93,6 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    @Transactional
     public CustomerSaldoResponseDTO tarikSaldo(Long customerId, Long amountSaldo) throws Exception {
         Customer customer = this.findCustomerById(customerId);
         customer.setSaldo(this.calculateDecreaseSaldo(amountSaldo, customer));
