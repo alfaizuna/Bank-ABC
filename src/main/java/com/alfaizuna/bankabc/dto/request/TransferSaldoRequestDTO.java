@@ -3,7 +3,6 @@ package com.alfaizuna.bankabc.dto.request;
 public class TransferSaldoRequestDTO {
 
     private Long fromCustomerId;
-    private Long toCustomerId;
     private String fromAccount;
     private String toAccount;
     private Long amount;
@@ -14,14 +13,6 @@ public class TransferSaldoRequestDTO {
 
     public void setFromCustomerId(Long fromCustomerId) {
         this.fromCustomerId = fromCustomerId;
-    }
-
-    public Long getToCustomerId() {
-        return toCustomerId;
-    }
-
-    public void setToCustomerId(Long toCustomerId) {
-        this.toCustomerId = toCustomerId;
     }
 
     public String getFromAccount() {
