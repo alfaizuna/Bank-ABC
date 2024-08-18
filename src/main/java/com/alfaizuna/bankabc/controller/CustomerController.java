@@ -23,6 +23,10 @@ public class CustomerController {
     @PostMapping
     public ResponseEntity<Customer> registerCustomer(@RequestBody RegisterCustomerRequestDTO request) throws Exception {
         try {
+            Customer customerByNIK = customerService.findCustomerByNIK(request.getNik());
+            if (customerByNIK != null) {
+                return ResponseEntity.status(400).eTag("Customer already exists").build();
+            }
             Customer customer = customerService.registerCustomer(request);
             return ResponseEntity.ok(customer);
         } catch (Exception e) {
@@ -56,6 +60,10 @@ public class CustomerController {
     @PostMapping("/transfer-saldo")
     public ResponseEntity<List<CustomerSaldoResponseDTO>> transferSaldo(@RequestBody TransferSaldoRequestDTO requestDTO) throws Exception {
         try {
+            CustomerSaldoResponseDTO customerSaldoResponseDTO = customerService.checkSaldo(requestDTO.getFromCustomerId());
+            if (customerSaldoResponseDTO.getAmountSaldo() < requestDTO.getAmount()) {
+                return ResponseEntity.status(400).eTag("Saldo is not enough!").build();
+            }
             List<CustomerSaldoResponseDTO> response = customerService.transferSaldo(requestDTO);
             return ResponseEntity.ok(response);
         } catch (Exception e) {
@@ -68,6 +76,10 @@ public class CustomerController {
             @PathVariable Long id,
             @RequestParam Long amountSaldo) throws Exception {
         try {
+            CustomerSaldoResponseDTO customerSaldoResponseDTO = customerService.checkSaldo(id);
+            if (customerSaldoResponseDTO.getAmountSaldo() < amountSaldo) {
+                return ResponseEntity.status(400).eTag("Saldo is not enough!").build();
+            }
             CustomerSaldoResponseDTO response = customerService.tarikSaldo(id, amountSaldo);
             return ResponseEntity.ok(response);
         } catch (Exception e) {

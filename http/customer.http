@@ -3,7 +3,7 @@ POST http://localhost:8080/customer
 Content-Type: application/json
 
 {
-  "nik":21243434323235,
+  "nik":21243434323239,
   "name":"udin2"
 }
 
@@ -20,6 +20,8 @@ POST http://localhost:8080/customer/transfer-saldo
 Content-Type: application/json
 
 {
+  "toCustomerId": 1,
+  "fromCustomerId": 2,
   "fromAccount": "202408160001",
   "toAccount": "202408160002",
   "amount": 20000

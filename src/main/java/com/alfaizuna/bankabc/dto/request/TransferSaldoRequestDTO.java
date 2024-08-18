@@ -1,12 +1,28 @@
 package com.alfaizuna.bankabc.dto.request;
 
-import java.math.BigDecimal;
-
 public class TransferSaldoRequestDTO {
 
+    private Long fromCustomerId;
+    private Long toCustomerId;
     private String fromAccount;
     private String toAccount;
     private Long amount;
+
+    public Long getFromCustomerId() {
+        return fromCustomerId;
+    }
+
+    public void setFromCustomerId(Long fromCustomerId) {
+        this.fromCustomerId = fromCustomerId;
+    }
+
+    public Long getToCustomerId() {
+        return toCustomerId;
+    }
+
+    public void setToCustomerId(Long toCustomerId) {
+        this.toCustomerId = toCustomerId;
+    }
 
     public String getFromAccount() {
         return fromAccount;

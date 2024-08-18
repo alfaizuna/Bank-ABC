@@ -13,7 +13,7 @@ public interface CustomerService {
 
     Customer findCustomerByNIK(Long nik);
 
-    Customer findCustomerByAccountNumber(String accountNumber);
+    Customer findCustomerByAccountNumber(String accountNumber) throws Exception;
 
     Customer registerCustomer(RegisterCustomerRequestDTO request) throws Exception;
 

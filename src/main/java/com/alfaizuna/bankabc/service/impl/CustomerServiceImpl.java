@@ -33,14 +33,16 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Customer findCustomerByAccountNumber(String accountNumber) {
-        return customerRepository.findByAccountNumber(accountNumber).orElse(null);
+    public Customer findCustomerByAccountNumber(String accountNumber) throws Exception {
+        Customer customer = customerRepository.findByAccountNumber(accountNumber).orElse(null);
+        if (Objects.isNull(customer)) {
+            throw new Exception("customer not found with this account number: " + accountNumber);
+        }
+        return customer;
     }
 
     @Override
     public Customer registerCustomer(RegisterCustomerRequestDTO request) throws Exception {
-        this.checkCustomerExistByCustomerNIK(request.getNik());
-
         // add new customer
         Customer customer = new Customer();
         customer.setName(request.getName());
@@ -77,10 +79,6 @@ public class CustomerServiceImpl implements CustomerService {
         Customer fromAccount = this.findCustomerByAccountNumber(requestDTO.getFromAccount());
         Customer toAccount = this.findCustomerByAccountNumber(requestDTO.getToAccount());
 
-        if (Objects.isNull(fromAccount) || Objects.isNull(toAccount)) {
-            throw new Exception("Customer not found");
-        }
-
         fromAccount.setSaldo(this.calculateDecreaseSaldo(requestDTO.getAmount(), fromAccount));
         toAccount.setSaldo(this.calculateIncreaseSaldo(requestDTO.getAmount(), toAccount));
 
@@ -113,13 +111,6 @@ public class CustomerServiceImpl implements CustomerService {
             throw new Exception("customer not found with this customerId: " + customerId);
         }
         return customer;
-    }
-
-    private void checkCustomerExistByCustomerNIK(Long nik) throws Exception {
-        Customer customer = this.findCustomerByNIK(nik);
-        if (Objects.nonNull(customer)) {
-            throw new Exception("Customer has been registered");
-        }
     }
 
     private long calculateIncreaseSaldo(Long amountSaldo, Customer customer) {
